@@ -89,6 +89,7 @@ procedure TfrmCurrencyConverter.btnConvertClick(Sender: TObject);
 begin
   if (edtAmount.Text <> '') then
     Convert();
+    frmCurrencyConverter.Caption := 'test';
 end;
 
 procedure TfrmCurrencyConverter.DownloadXML();
