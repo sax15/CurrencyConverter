@@ -7,7 +7,9 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.ListBox,
   FMX.StdCtrls, FMX.Layouts, FMX.Controls.Presentation, FMX.Edit,
   Xml.XMLDoc, Xml.XMLIntf, System.Generics.Collections, FMX.Memo.Types,
-  FMX.ScrollBox, FMX.Memo, FMX.Objects;
+  FMX.ScrollBox, FMX.Memo,
+  FMX.VirtualKeyboard, FMX.Platform,
+  FMX.Objects, System.IOUtils;
 
 type
   TfrmCurrencyConverter = class(TForm)
@@ -48,8 +50,6 @@ type
 var
   frmCurrencyConverter: TfrmCurrencyConverter;
 const
-  //exchange_rates_page = 'https://www.nlb.si/content/nlbbanks/nlbsi/sl/osebno/pomoc-in-orodja/tecajnice-in-menjalnica/banka-slovenije.exchangerates.20250113.bs.1736770689345.xml';
-  //exchange_rates_page = 'https://www.nlb.si/content/nlbbanks/nlbsi/sl/osebno/pomoc-in-orodja/tecajnice-in-menjalnica.exchangerates.20250114.individuals.1736828604624.xml';
   exchange_rates_page = 'https://www.bsi.si/_data/tecajnice/dtecbs.xml';
 
 implementation
@@ -73,22 +73,21 @@ end;
 
 procedure TfrmCurrencyConverter.btnChangeCurrencyClick(Sender: TObject);
 var
-  val: String;
   i: Integer;
 begin
-  val := edtAmount.Text;
-  edtAmount.Text := StringReplace(labValue.Text, '.', '', [rfReplaceAll]);
-  labValue.Text := val;
   i := cobFromCurrency.ItemIndex;
   cobFromCurrency.ItemIndex := cobToCurrency.ItemIndex;
   cobToCurrency.ItemIndex := i;
-  Convert();
 end;
 
 procedure TfrmCurrencyConverter.btnConvertClick(Sender: TObject);
+var
+  keyboard: IFMXVirtualKeyboardService;
 begin
   if (edtAmount.Text <> '') then
+  begin
     Convert();
+  end;
 end;
 
 procedure TfrmCurrencyConverter.DownloadXML();
@@ -96,16 +95,37 @@ var
   http_client: TNetHTTPClient;
   XMLDoc: IXMLDocument;
   stream: TMemoryStream;
+  localFileName: string;
 begin
   http_client := TNetHTTPClient.Create(nil);
+  localFileName := TPath.Combine(TPath.GetDocumentsPath, 'DB');
+  if NOT TDirectory.Exists(localFileName) then
+    TDirectory.CreateDirectory(localFileName);
+  localFileName := TPath.Combine(TPath.GetDocumentsPath, 'dtecbs.xml');
+
   try
     stream := TMemoryStream.Create;
     try
-      http_client.Get(exchange_rates_page, stream);
-      stream.Position := 0;
-      XMLDoc := TXMLDocument.Create(nil);
-      XMLDoc.LoadFromStream(stream);
-      XMLDoc.Active := True;
+      try
+        http_client.Get(exchange_rates_page, stream);
+        stream.Position := 0;
+        stream.SaveToFile(localFileName);
+        XMLDoc := TXMLDocument.Create(nil);
+        XMLDoc.LoadFromStream(stream);
+        XMLDoc.Active := True;
+      except
+        on E: Exception do
+        begin
+          if TFile.Exists(localFileName) then
+          begin
+            XMLDoc := TXMLDocument.Create(nil);
+            XMLDoc.LoadFromFile(localFileName);
+            XMLDoc.Active := True;
+          end
+          else
+            raise Exception.Create('XML ni bilo mogoče prenesti in lokalna datoteka ne obstaja.');
+        end;
+      end;
       ParseXML(XMLDoc);
     finally
       stream.Free;
@@ -115,22 +135,48 @@ begin
   end;
 end;
 
+
 procedure TfrmCurrencyConverter.edtAmountKeyDown(Sender: TObject; var Key: Word;
   var KeyChar: WideChar; Shift: TShiftState);
+var
+  keyboard: IFMXVirtualKeyboardService;
 begin
   if (Key = 13) AND (edtAmount.Text <> '') then
   begin
+    {$IF DEFINED(ANDROID)}
+    if TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService,Keyboard) then
+    begin
+      if TVirtualKeyBoardState.Visible in Keyboard.GetVirtualKeyBoardState then
+      begin
+          keyboard.HideVirtualKeyboard;
+      end
+    end;
+    {$ENDIF}
     Convert();
     exit;
   end;
-  if not (KeyChar in ['0'..'9', ',']) then
-  begin
-    KeyChar := #0;
-  end
-  else if (KeyChar  in [',']) AND (Pos(',', edtAmount.Text) > 0) then
-  begin
-    KeyChar := #0;
-  end;
+
+  {$IF DEFINED(ANDROID)}
+    if not (KeyChar in ['0'..'9', '.']) then
+    begin
+      KeyChar := #0;
+    end
+    else if (KeyChar  in ['.']) AND (Pos('.', edtAmount.Text) > 0) then
+    begin
+      KeyChar := #0;
+    end;
+  {$ENDIF}
+  {$IF DEFINED(MSWINDOWS)}
+    if not (KeyChar in ['0'..'9', ',']) then
+    begin
+      KeyChar := #0;
+    end
+    else if (KeyChar  in [',']) AND (Pos(',', edtAmount.Text) > 0) then
+    begin
+      KeyChar := #0;
+    end;
+  {$ENDIF}
+
 end;
 
 procedure TfrmCurrencyConverter.ParseXML(XMLDoc: IXMLDocument);
