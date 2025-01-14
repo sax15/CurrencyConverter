@@ -2360,11 +2360,5 @@ object frmCurrencyConverter: TfrmCurrencyConverter
     TextSettings.HorzAlign = Center
     Text = 'Info'
     TabOrder = 2
-    object Button1: TButton
-      Position.X = 272.000000000000000000
-      TabOrder = 4
-      Text = 'Button1'
-      TextSettings.Trimming = None
-    end
   end
 end

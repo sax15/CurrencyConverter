@@ -28,7 +28,6 @@ type
     btnChangeCurrency: TButton;
     cobToCurrency: TComboBox;
     imgLogo: TImage;
-    Button1: TButton;
     procedure btnConvertClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
