@@ -9,7 +9,7 @@ uses
   Xml.XMLDoc, Xml.XMLIntf, System.Generics.Collections, FMX.Memo.Types,
   FMX.ScrollBox, FMX.Memo,
   FMX.VirtualKeyboard, FMX.Platform,
-  FMX.Objects, System.IOUtils;
+  FMX.Objects, System.IOUtils, IniFiles;
 
 type
   TfrmCurrencyConverter = class(TForm)
@@ -43,6 +43,8 @@ type
     procedure ParseXML(XMLDoc: IXMLDocument);
     procedure Convert();
     function ConvertDate(datum: string): string;
+    procedure LoadIni();
+    procedure SaveIni();
   public
     { Public declarations }
   end;
@@ -62,13 +64,41 @@ procedure TfrmCurrencyConverter.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   currency.Free;
+  SaveIni()
 end;
 
 procedure TfrmCurrencyConverter.FormCreate(Sender: TObject);
 begin
-  edtAmount.SetFocus;
   currency := TDictionary<string, Double>.Create;
   DownloadXML();
+  LoadIni();
+  edtAmount.SetFocus;
+end;
+
+procedure TfrmCurrencyConverter.LoadIni();
+var
+  iniFile: TIniFile;
+begin
+  iniFile := TIniFile.Create(System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'System.ini'));
+  try
+    cobFromCurrency.ItemIndex := IniFile.ReadInteger('Settings', 'From Currency', 0);
+    cobToCurrency.ItemIndex := iniFile.ReadInteger('Settings', 'To Currency', 1);
+  finally
+    IniFile.Free;
+  end;
+end;
+
+procedure TfrmCurrencyConverter.SaveIni();
+var
+  iniFile: TIniFile;
+begin
+  iniFile := TIniFile.Create(System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'System.ini'));
+  try
+    IniFile.WriteInteger('Settings', 'From Currency', cobFromCurrency.ItemIndex);
+    IniFile.WriteInteger('Settings', 'To Currency', cobToCurrency.ItemIndex);
+  finally
+    IniFile.Free;
+  end;
 end;
 
 procedure TfrmCurrencyConverter.btnChangeCurrencyClick(Sender: TObject);

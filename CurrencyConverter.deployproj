@@ -4,8 +4,8 @@
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>
     <PropertyGroup>
-        <DeviceId Condition="'$(Platform)'=='Android'">R5CX23T23TR</DeviceId>
-        <DeviceId Condition="'$(Platform)'=='Android64'">R5CX23T23TR</DeviceId>
+        <DeviceId Condition="'$(Platform)'=='Android'"/>
+        <DeviceId Condition="'$(Platform)'=='Android64'"/>
         <DeviceId Condition="'$(Platform)'=='iOSDevice64'"/>
         <DeviceId Condition="'$(Platform)'=='iOSSimARM64'"/>
     </PropertyGroup>
@@ -254,19 +254,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(ProjectName).Artwork\Android\FM_SplashImage_470x320.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>CurrencyConverter\res\drawable-normal\</RemoteDir>
-            <RemoteName>splash_image.png</RemoteName>
-            <DeployClass>Android_SplashImage470</DeployClass>
+        <DeployFile Include="$(BDS)\lib\android\debug\mips\libnative-activity.so" Condition="'$(Config)'=='Release'">
+            <RemoteDir>CurrencyConverter\library\lib\mips\</RemoteDir>
+            <RemoteName>libCurrencyConverter.so</RemoteName>
+            <DeployClass>AndroidLibnativeMipsFile</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(BDS)\lib\android\debug\mips\libnative-activity.so" Condition="'$(Config)'=='Release'">
-            <RemoteDir>CurrencyConverter\library\lib\mips\</RemoteDir>
-            <RemoteName>libCurrencyConverter.so</RemoteName>
-            <DeployClass>AndroidLibnativeMipsFile</DeployClass>
+        <DeployFile Include="$(ProjectName).Artwork\Android\FM_SplashImage_470x320.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>CurrencyConverter\res\drawable-normal\</RemoteDir>
+            <RemoteName>splash_image.png</RemoteName>
+            <DeployClass>Android_SplashImage470</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -317,20 +317,20 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_48x48.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>CurrencyConverter\res\drawable-mdpi\</RemoteDir>
+        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_144x144.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>CurrencyConverter\res\drawable-xxhdpi\</RemoteDir>
             <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon48</DeployClass>
+            <DeployClass>Android_LauncherIcon144</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Android64\Debug\CurrencyConverter.classes" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>CurrencyConverter\classes\</RemoteDir>
-            <RemoteName>CurrencyConverter.classes</RemoteName>
-            <DeployClass>AndroidClasses</DeployClass>
-            <Operation>64</Operation>
+        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_48x48.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>CurrencyConverter\res\drawable-mdpi\</RemoteDir>
+            <RemoteName>ic_launcher.png</RemoteName>
+            <DeployClass>Android_LauncherIcon48</DeployClass>
+            <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -344,11 +344,11 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_144x144.png" Condition="'$(Config)'=='Release'">
-            <RemoteDir>CurrencyConverter\res\drawable-xxhdpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon144</DeployClass>
-            <Operation>1</Operation>
+        <DeployFile Include="Android64\Debug\CurrencyConverter.classes" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>CurrencyConverter\classes\</RemoteDir>
+            <RemoteName>CurrencyConverter.classes</RemoteName>
+            <DeployClass>AndroidClasses</DeployClass>
+            <Operation>64</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -490,19 +490,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_72x72.png" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>CurrencyConverter\res\drawable-hdpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon72</DeployClass>
+        <DeployFile Include="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Condition="'$(Config)'=='Release'">
+            <RemoteDir>CurrencyConverter\library\lib\armeabi\</RemoteDir>
+            <RemoteName>libCurrencyConverter.so</RemoteName>
+            <DeployClass>AndroidLibnativeArmeabiFile</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Condition="'$(Config)'=='Release'">
-            <RemoteDir>CurrencyConverter\library\lib\armeabi\</RemoteDir>
-            <RemoteName>libCurrencyConverter.so</RemoteName>
-            <DeployClass>AndroidLibnativeArmeabiFile</DeployClass>
+        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_72x72.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>CurrencyConverter\res\drawable-hdpi\</RemoteDir>
+            <RemoteName>ic_launcher.png</RemoteName>
+            <DeployClass>Android_LauncherIcon72</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -526,19 +526,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Android64\Debug\colors.xml" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>CurrencyConverter\res\values\</RemoteDir>
-            <RemoteName>colors.xml</RemoteName>
-            <DeployClass>Android_Colors</DeployClass>
+        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_192x192.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>CurrencyConverter\res\drawable-xxxhdpi\</RemoteDir>
+            <RemoteName>ic_launcher.png</RemoteName>
+            <DeployClass>Android_LauncherIcon192</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Android64\Release\AndroidManifest.xml" Condition="'$(Config)'=='Release'">
-            <RemoteDir>CurrencyConverter\</RemoteDir>
-            <RemoteName>AndroidManifest.xml</RemoteName>
-            <DeployClass>ProjectAndroidManifest</DeployClass>
+        <DeployFile Include="Android64\Debug\colors.xml" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>CurrencyConverter\res\values\</RemoteDir>
+            <RemoteName>colors.xml</RemoteName>
+            <DeployClass>Android_Colors</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -553,10 +553,10 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_192x192.png" Condition="'$(Config)'=='Release'">
-            <RemoteDir>CurrencyConverter\res\drawable-xxxhdpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon192</DeployClass>
+        <DeployFile Include="Android64\Release\AndroidManifest.xml" Condition="'$(Config)'=='Release'">
+            <RemoteDir>CurrencyConverter\</RemoteDir>
+            <RemoteName>AndroidManifest.xml</RemoteName>
+            <DeployClass>ProjectAndroidManifest</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
@@ -703,19 +703,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Android\Release\styles.xml" Condition="'$(Config)'=='Release'">
-            <RemoteDir>CurrencyConverter\res\values\</RemoteDir>
-            <RemoteName>styles.xml</RemoteName>
-            <DeployClass>AndroidSplashStyles</DeployClass>
+        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_72x72.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>CurrencyConverter\res\drawable-hdpi\</RemoteDir>
+            <RemoteName>ic_launcher.png</RemoteName>
+            <DeployClass>Android_LauncherIcon72</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(ProjectName).Artwork\Android\FM_LauncherIcon_72x72.png" Condition="'$(Config)'=='Release'">
-            <RemoteDir>CurrencyConverter\res\drawable-hdpi\</RemoteDir>
-            <RemoteName>ic_launcher.png</RemoteName>
-            <DeployClass>Android_LauncherIcon72</DeployClass>
+        <DeployFile Include="Android\Release\styles.xml" Condition="'$(Config)'=='Release'">
+            <RemoteDir>CurrencyConverter\res\values\</RemoteDir>
+            <RemoteName>styles.xml</RemoteName>
+            <DeployClass>AndroidSplashStyles</DeployClass>
             <Operation>1</Operation>
             <LocalCommand/>
             <RemoteCommand/>
